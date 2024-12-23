@@ -106,6 +106,16 @@ services:
     ports:
       - "8080:8080"
 
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer_ce
+    ports:
+      - "9002:9000"
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data    
+
 volumes:
   prometheus_data:
     driver: local
