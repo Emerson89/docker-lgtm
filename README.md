@@ -21,11 +21,3 @@ chmod +x /usr/local/bin/docker-compose
 ```bash
 docker-compose up -d
 ```
-
-Crie os buckets loki e tempo no minio acessando a porta 9001 
-
-![alt text](minio.png)
-![alt text](minio_2.png)
-
-login: admin
-pass: admin123

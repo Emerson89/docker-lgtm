@@ -10,6 +10,8 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     environment:
       - JAEGER_AGENT_HOST=otelcol
+    depends_on:
+      - minio  
 
   grafana:
     image: grafana/grafana:11.0.1
@@ -37,7 +39,9 @@ services:
     command: [ "-config.file=/etc/tempo.yaml" ]
     volumes:
       - ./services/tempo/tempo.yaml:/etc/tempo.yaml
-
+    depends_on:
+      - minio
+  
   ## Tools
   promtail:
     image: grafana/promtail:2.9.5
@@ -72,7 +76,7 @@ services:
     command: --config.file=/etc/prometheus/prometheus.yml --web.enable-remote-write-receiver
     volumes:
       - ./services/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus  # Volume persistente para dados do Prometheus
+      - prometheus_data:/prometheus
     ports:
       - "9090:9090"
   
@@ -80,8 +84,6 @@ services:
     image: minio/minio:latest
     container_name: minio
     environment:
-      MINIO_ACCESS_KEY_ID: minioaccesskey
-      MINIO_SECRET_ACCESS_KEY: miniosecretkey
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
     command: server /data --console-address ":9001"
@@ -90,6 +92,27 @@ services:
       - "9001:9001"  # Console do MinIO
     volumes:
       - minio_data:/data
+
+  minio-init:
+    image: minio/mc:latest
+    container_name: minio-init
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin123
+    entrypoint: >
+      /bin/sh -c "
+      echo 'Aguardando o MinIO ficar disponível...';
+      until (echo > /dev/tcp/minio/9000) 2>/dev/null; do
+        sleep 2;
+      done &&
+      mc alias set myminio http://minio:9000 admin admin123 &&
+      mc mb myminio/loki &&
+      mc mb myminio/tempo &&
+      mc mb myminio/mimir
+      "
+    depends_on:
+      - minio
+    restart: "no"    
 
   app:
     image: emr001/java-app-ecs:v1
@@ -111,6 +134,7 @@ services:
     container_name: portainer_ce
     ports:
       - "9002:9000"
+      - "9443:9443"
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
