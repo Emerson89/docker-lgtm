@@ -37,6 +37,7 @@ services:
     image: grafana/tempo:2.5.0
     container_name: tempo
     command: [ "-config.file=/etc/tempo.yaml" ]
+    restart: always
     volumes:
       - ./services/tempo/tempo.yaml:/etc/tempo.yaml
     depends_on:
