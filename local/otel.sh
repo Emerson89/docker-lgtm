@@ -10,3 +10,5 @@ sudo cp bin/telemetrygen /usr/local/bin/
 docker run -p 4317:4317 -p 8888:8888 -v $(pwd)/config.yaml:/etc/otelcol-contrib/config.yaml ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.86.0
 
 ## telemetrygen traces --otlp-insecure --traces 1
+## otelcol_processor_tail_sampling_count_traces_sampled
+## otelcol_receiver_accepted_spans
