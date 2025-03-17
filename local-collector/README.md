@@ -53,7 +53,7 @@ No config.yaml podemos realizar as mudanças necessárias no caso estou usando o
 
 No browser abra a url http://localhost:8888/metrics é com ela que olhamos as metricas do collector e identificamos o sampling
 
-- Mão na Massa
+# Mão na Massa
 
 Em um segundo terminal execute o telemetrygen para gerar traces, iremos fazer o type "always_sample"
 
