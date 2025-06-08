@@ -130,6 +130,17 @@ services:
     ports:
       - "8080:8080"
 
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: unless-stopped    
+
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer_ce

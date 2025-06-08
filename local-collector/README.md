@@ -24,6 +24,7 @@ sudo cp bin/telemetrygen /usr/local/bin/
 Execute o docker-compose ou docker
 
 
+
 ```bash
 docker-compose up
 ```

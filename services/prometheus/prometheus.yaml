@@ -8,3 +8,7 @@ scrape_configs:
     metrics_path: '/metrics'
     static_configs:
       - targets: ['otelcol:9292']
+
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']    
