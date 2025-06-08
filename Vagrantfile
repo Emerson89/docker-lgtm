@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 vms = {
-'lgtm' => {'memory' => '1048', 'cpus' => '2', 'ip' => '20', 'box' => 'ubuntu/jammy64'},
+'lgtm' => {'memory' => '2048', 'cpus' => '2', 'ip' => '20', 'box' => 'ubuntu/jammy64'},
 #'node' => {'memory' => '2048', 'cpus' => '2', 'ip' => '11', 'box' => 'ubuntu/jammy64'},
 #'k8s2' => {'memory' => '3048', 'cpus' => '4', 'ip' => '15', 'box' => 'ubuntu/focal64'},
 #'almalinux-srv' => {'memory' => '2048', 'cpus' => '2', 'ip' => '12', 'box' => 'almalinux/8'},
